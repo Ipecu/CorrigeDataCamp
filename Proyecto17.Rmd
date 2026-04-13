@@ -33,3 +33,21 @@ entrega <- unzip("entregas.zip", exdir = "entregas")
 ```
 
 
+Búsqueda de los archivos  mediante la función list.files.
+
+Para los puntos buscamos patrones que contengan la palabra "puntos" y terminen en .txt
+
+En el caso de los certificados buscamos documentos con extensión .pdf 
+
+```{r}
+ficheros_puntos <- list.files(path = "entregas", pattern = ".*puntos.*\\.txt$", 
+                              recursive = TRUE, full.names = TRUE)
+
+ficheros_pdf <- list.files(path = "entregas", pattern = "\\.(pdf)$", 
+                           recursive = TRUE, full.names = TRUE)
+
+
+
+```
+
+
