@@ -1,0 +1,35 @@
+---
+title: "Proyecto_17ab"
+author: "Irene Pérez"
+date: "2026-04-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+Carga de los datos obtenidos mediante el fichero 
+
+```{r}
+library(readr)
+library(readxl)
+library(stringr)
+
+
+
+```
+
+
+Descompresión de la carpeta
+
+```{r}
+
+entrega <- unzip("entregas.zip", exdir = "entregas")
+
+```
+
+
