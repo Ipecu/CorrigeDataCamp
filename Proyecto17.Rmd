@@ -58,6 +58,45 @@ ficheros_pdf <- list.files(path = "entregas", pattern = "\\.(pdf)$",
 
 
 
+```{r}
+library(tidyverse)
+library(readxl)
 
+apellidos <- c()
+ptos_num <- c()
+nom_fich <- c()
+cont<- c()
+carpetasptos <- c() 
 
+for (ruta in ficheros_puntos) {
+
+  partesr <- str_split(ruta, "/")[[1]]
+  nom_carpeta_alum <- partesr[length(partesr) - 1]
+  apellido <- str_split(nombre_carpeta_alumno, " ")[[1]][1]
+  linea <- readLines(ruta, n = 1, warn = FALSE)
+  puntos <- as.numeric(str_extract(linea_texto, "\\d+"))
+  
+  
+  apellidos <- c(apellidos, apellido)
+  ptos_num <- c(ptos_num, puntos)
+  nom_fich <- c(nom_fich, basename(ruta))
+  vont <- c(cont, linea)
+  carpetasptos <- c(carpetasptos, dirname(ruta))
+}
+  
+#Creación df
+evalua_df <- data.frame(
+  apellidos = apellidos,
+  puntos = ptos_num,
+  NomFile = nom_fichs,
+  Puntos = cont,
+  stringsAsFactors = FALSE
+)
+
+#Ordenar por apellido 
+evalua_df <- evalua_df %>% arrange(apellidos)
+
+```
+
+Respuestas a las preguntas 
 
