@@ -61,42 +61,70 @@ ficheros_pdf <- list.files(path = "entregas", pattern = "\\.(pdf)$",
 ```{r}
 library(tidyverse)
 library(readxl)
-
-apellidos <- c()
-ptos_num <- c()
-nom_fich <- c()
-cont<- c()
-carpetasptos <- c() 
+vapellidos <- c()
+vpuntos_num <- c()
+vnom_file <- c()
+vcontenido <- c()
+vcarpetas_con_puntos <- c() # Para el análisis posterior
 
 for (ruta in ficheros_puntos) {
-
-  partesr <- str_split(ruta, "/")[[1]]
-  nom_carpeta_alum <- partesr[length(partesr) - 1]
+  
+  
+  partes_ruta <- str_split(ruta, "/")[[1]]
+  nombre_carpeta_alumno <- partes_ruta[length(partes_ruta) - 1]
   apellido <- str_split(nombre_carpeta_alumno, " ")[[1]][1]
-  linea <- readLines(ruta, n = 1, warn = FALSE)
-  puntos <- as.numeric(str_extract(linea_texto, "\\d+"))
+  linea_texto <- readLines(ruta, n = 1, warn = FALSE)
+  puntos_solo_num <- as.numeric(gsub("\\D", "", linea_texto))
   
-  
-  apellidos <- c(apellidos, apellido)
-  ptos_num <- c(ptos_num, puntos)
-  nom_fich <- c(nom_fich, basename(ruta))
-  vont <- c(cont, linea)
-  carpetasptos <- c(carpetasptos, dirname(ruta))
+  vapellidos <- c(vapellidos, apellido)
+  vpuntos_num <- c(vpuntos_num, puntos_solo_num)
+  vnom_file <- c(vnom_file, basename(ruta))
+  vcontenido <- c(vcontenido, linea_texto)
+  vcarpetas_con_puntos <- c(vcarpetas_con_puntos, dirname(ruta))
 }
-  
-#Creación df
+
+
 evalua_df <- data.frame(
-  apellidos = apellidos,
-  puntos = ptos_num,
-  NomFile = nom_fichs,
-  Puntos = cont,
+  apellidos = vapellidos,
+  puntos = vpuntos_num,
+  NomFile = vnom_file,
+  Puntos = vcontenido,
   stringsAsFactors = FALSE
 )
 
 #Ordenar por apellido 
 evalua_df <- evalua_df %>% arrange(apellidos)
+evalua_df
 
 ```
 
 Respuestas a las preguntas 
+```{r}
+# ¿Todas las entregas usaron "puntos.txt"?
+variantes_nombres <- unique(evalua_df$NomFile)
+puntos_txt <- all(evalua_df$NomFile == "puntos.txt")
+
+# ¿Cuántas variantes hay?
+table(vnom_file)
+
+# ¿Todas contienen el fichero de puntos y el justificante?
+
+carpetas_puntos <- unique(dirname(ficheros_puntos))
+carpetas_just <- unique(dirname(ficheros_pdf))
+# Comparamos las carpetas que tienen puntos frente a las que tienen justificante
+setdiff(carpetas_puntos, carpetas_just)
+setdiff(carpetas_just, carpetas_puntos) 
+
+
+```
+
+
+```{r}
+
+
+
+```
+
+
+
 
