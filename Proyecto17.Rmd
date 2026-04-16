@@ -29,9 +29,6 @@ Descompresión de la carpeta
 ```{r}
 ruta1 <- "data/entregas.zip"
 
-#Carga fichero
-fich <- "data/AlumnosTD25_26.xlsx"
-
 entrega <- unzip("entregas.zip", exdir = "entregas")
 
 ```
@@ -117,10 +114,22 @@ setdiff(carpetas_just, carpetas_puntos)
 
 
 ```
-
+Exportación de los resultados obtenidos
 
 ```{r}
+library(openxlsx)
+#Exportanción primer excel
+write_xlsx(evalua_df, "NotasRIntermedio.xlsx")
 
+
+ruta_al<- "data/AlumnosTD25_26.xlsx"
+alumnos_matriculados <- read_excel(ruta_al)
+colnames(alumnos_matriculados)[colnames(alumnos_matriculados) == "Apellido(s)"] <- "apellidos"
+
+alumnos_notas <- merge(alumnos_matriculados, evalua_df, by = "apellidos", all.x = TRUE)
+
+#Exportación segundo excel  
+write_xlsx(alumnos_notas, "AlumnosNotas.xlsx")
 
 
 ```
