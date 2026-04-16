@@ -27,6 +27,10 @@ library(stringr)
 Descompresión de la carpeta
 
 ```{r}
+ruta1 <- "data/entregas.zip"
+
+#Carga fichero
+fich <- "data/AlumnosTD25_26.xlsx"
 
 entrega <- unzip("entregas.zip", exdir = "entregas")
 
@@ -40,7 +44,7 @@ Para los puntos buscamos patrones que contengan la palabra "puntos" y terminen e
 En el caso de los certificados buscamos documentos con extensión .pdf 
 
 ```{r}
-ficheros_puntos <- list.files(path = "entregas", pattern = ".*puntos.*\\.txt$", 
+ficheros_puntos <- list.files(path = "entregas", pattern = "\\.txt$", 
                               recursive = TRUE, full.names = TRUE)
 
 ficheros_pdf <- list.files(path = "entregas", pattern = "\\.(pdf)$", 
@@ -49,5 +53,11 @@ ficheros_pdf <- list.files(path = "entregas", pattern = "\\.(pdf)$",
 
 
 ```
+
+
+
+
+
+
 
 
