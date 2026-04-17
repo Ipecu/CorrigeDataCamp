@@ -98,26 +98,29 @@ evalua_df
 Respuestas a las preguntas 
 ```{r}
 # ¿Todas las entregas usaron "puntos.txt"?
-variantes_nombres <- unique(evalua_df$NomFile)
-puntos_txt <- all(evalua_df$NomFile == "puntos.txt")
+
+puntos_txt <- all(evalua_df$NomFile == "puntos.txt") #False, existen entregas que no siguieron dicho criterio
+
+
 
 # ¿Cuántas variantes hay?
-table(vnom_file)
+variantes <- table(vnom_file)
+variantes_nombres <- unique(evalua_df$NomFile) #otra forma
+
 
 # ¿Todas contienen el fichero de puntos y el justificante?
-
-carpetas_puntos <- unique(dirname(ficheros_puntos))
+etas_puntos <- unique(dirname(ficheros_puntos))
 carpetas_just <- unique(dirname(ficheros_pdf))
-# Comparamos las carpetas que tienen puntos frente a las que tienen justificante
-setdiff(carpetas_puntos, carpetas_just)
-setdiff(carpetas_just, carpetas_puntos) 
 
+# Comparamos las carpetas que tienen puntos frente a las que tienen justificante
+setdiff(carpetas_just, carpetas_puntos) 
 
 ```
 Exportación de los resultados obtenidos
 
 ```{r}
 library(openxlsx)
+library(writexl)
 #Exportanción primer excel
 write_xlsx(evalua_df, "NotasRIntermedio.xlsx")
 
